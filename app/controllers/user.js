@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 module.exports = {
 
     /**
-     * Méthode pour créer un utilisateur et l'ajouter à la session
+     * Method to create a user
      * @param {*} req 
      * @param {*} res 
      */

@@ -10,7 +10,7 @@ class User {
     }
 
     /**
-     * Ajout d'un nouvel utilisateur en BDD
+     * create new user in DB
      * @param {Object} userToInsert 
      * @returns {User}
      */
@@ -37,6 +37,11 @@ class User {
         return result.rows;
     };
 
+    /**
+     * login 
+     * @param {Object} emailToFind 
+     * @returns {User}
+     */
     static async findUserLoggedByEmail(emailToFind) {
 
         const queryString = `

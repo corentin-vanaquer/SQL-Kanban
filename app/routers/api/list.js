@@ -10,26 +10,31 @@ const listController = require('../../controllers/list');
 
 //~ ---------- GET
 
-// récupérer toutes les listes
-router.get('/lists', controllerHandler(listController.findAll));
-
-// récupérer une liste
-router.get('/lists/:id', controllerHandler(listController.findOne));
+/**
+ * fetch a user lists
+ */
+router.get('/user/:id/list', controllerHandler(listController.findAll));
 
 //~ ---------- POST
 
-// créer une nouvelle liste
-router.post('/lists', controllerHandler(listController.addOne));
+/**
+ * create a list
+ */
+router.post('/user/:id/list', controllerHandler(listController.createList));
 
 //~ ---------- PATCH
 
-// mettre à jour une liste
-router.patch('/lists/:id', controllerHandler(listController.updateOne));
+/**
+ * update a list
+ */
+router.patch('/user/:id/list', controllerHandler(listController.updateOne));
 
 //~ ---------- DELETE   
 
-// supprimer une liste
-router.delete('/lists/:id', controllerHandler(listController.deleteOne));
+/**
+ * delete a list
+ */
+router.delete('/user/:id/list', controllerHandler(listController.deleteOne));
 
 
 

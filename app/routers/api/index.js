@@ -16,8 +16,8 @@ const assocRouter = require('./assoc');
 
 // Use all router files
 router.use(userRouter);
+router.use(listRouter);
 // router.use(cardRouter);
-// router.use(listRouter);
 // router.use(labelRouter);
 // router.use(assocRouter);
 

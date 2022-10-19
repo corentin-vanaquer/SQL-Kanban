@@ -1,23 +1,59 @@
 @hostname = http://localhost:9000/api
 
-### séparateur entre deux requêtes
+### INSCRIPTION
 
 POST {{hostname}}/subscribe
 content-type: application/json
 
 {
-	"firstname": "Corentin",
-   "lastname": "Vanaquer",
-   "email": "corentin@gmail.com",
+	"firstname": "Paul",
+   "lastname": "Guy",
+   "email": "paul@gmail.com",
    "password": "password"
 }
 
-### séparateur entre deux requêtes
+### CONNECTION
 
 POST {{hostname}}/login
 content-type: application/json
 
 {
-   "email": "corentin@gmail.com",
+   "email": "paul@gmail.com",
    "password": "password"
 }
+
+### CREER LISTE
+
+POST {{hostname}}/user/1/list
+content-type: application/json
+
+{
+   "name": "duda",
+   "position": 9
+}
+
+### MODIFIER LISTE
+
+PATCH {{hostname}}/user/1/list
+content-type: application/json
+
+{
+   "id": 8,
+   "name": "yes",
+   "position": 3
+}
+
+### SUPPRIMMER LISTE
+
+DELETE {{hostname}}/user/2/list
+content-type: application/json
+
+{
+   "id": 7
+}
+
+### FETCH LISTE
+
+GET {{hostname}}/user/2/list
+content-type: application/json
+

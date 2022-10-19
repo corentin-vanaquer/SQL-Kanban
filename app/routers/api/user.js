@@ -8,12 +8,12 @@ const userController = require('../../controllers/user');
 //~ ---------- POST
 
 /**
- * réception du formulaire d'inscription
+ * Signing up
  */
 router.post('/subscribe', userController.createUser);
 
 /**
- * réception du formulaire de login
+ * Login
  */
  router.post('/login', userController.login);
 

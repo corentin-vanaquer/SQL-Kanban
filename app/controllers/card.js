@@ -10,6 +10,8 @@ module.exports = {
     },
 
     async createCard(req, res) {
+
+        
         const card = await Card.create(req.body);
 
         res.json(card);
