@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "DEBUG='app:server' node index.js",
-    "build": "npm install",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "resetDb": "sqitch revert -y; sqitch deploy"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bunyan": "^1.8.15",
     "cors": "^2.8.5",
     "debug": "^4.3.4",

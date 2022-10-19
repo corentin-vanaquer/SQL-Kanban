@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS "user" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
-    mail TEXT NOT NULL,
+    email TEXT NOT NULL,
+    password TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ
 );

@@ -5,57 +5,50 @@ class User {
         this.id = obj.id;
         this.firstname = obj.firstname;
         this.lastname = obj.lastname;
-        this.mail = obj.mail;
+        this.email = obj.email;
         this.password = obj.password;
     }
 
     /**
      * Ajout d'un nouvel utilisateur en BDD
-     * @param {Object} userTemp 
+     * @param {Object} userToInsert 
      * @returns {User}
      */
-    static async create(userTemp){
-        const result = await client.query("Insert INTO user VALUES ($1, $2, $3, $4, $5)",[userTemp]);
-        const user = new User(result.rows[0]);
-        return user;
-    }
-
-    /**
-     * Récupération des informations d'un utilisateur via son email
-     * @param {String} mail 
-     * @returns 
-     */
-    static async getUserByMail(mail){
-        const result = await client.query('SELECT * FROM public."user" WHERE mail=$1',[mail]);
-
-        if(result?.rows.length > 0){
-            
-            return new User(result.rows[0]);
+    static async create(userToInsert){
+        
+        const values = [];
+        const columns = [];
+        let counter = 1;
+        const queryParams = [];
+        
+        for (const key in userToInsert) {
+          columns.push(key);
+          queryParams.push(`$${counter}`);
+          counter++
+          
+          values.push(userToInsert[key]);
         }
-        else{
-            // erreur lors de la récupération
-            return;
-        }
-    }
+    
+        const queryString = `
+        INSERT INTO "user" (${columns.join(',')}) VALUES (${queryParams.join(',')}) RETURNING *;`;
+    
+        const result = await client.query(queryString, [...values]);
+    
+        return result.rows;
+    };
 
-    /**
-     * Vérification du mot de passe
-     * @param {String} passwordTemp 
-     * @returns {Boolean}
-     */
-    checkPassword(passwordTemp){
-        return this.password === passwordTemp;
-    }
+    static async findUserLoggedByEmail(emailToFind) {
 
-    /**
-     * Mise à jour du statut de l'utilsateur (PRET/PAS PRET)
-     * @param {Boolean} state 
-     */
-    async updateState(state){
-        await client.query('SELECT update_state($1,$2)',[this,state]);
-        this.state = state;
-    }
-
+        const queryString = `
+        SELECT "user".id, "user".email, "user".password
+        FROM "user"
+        WHERE "user".email = $1;
+        `;
+      
+        const result = await client.query(queryString, [emailToFind]);
+    
+        return result.rows;
+      };
 
 }
 

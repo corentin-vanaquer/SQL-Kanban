@@ -6,9 +6,18 @@ POST {{hostname}}/subscribe
 content-type: application/json
 
 {
-   "id": 1,
 	"firstname": "Corentin",
    "lastname": "Vanaquer",
-   "mail": "corentin@gmail.com",
+   "email": "corentin@gmail.com",
+   "password": "password"
+}
+
+### séparateur entre deux requêtes
+
+POST {{hostname}}/login
+content-type: application/json
+
+{
+   "email": "corentin@gmail.com",
    "password": "password"
 }

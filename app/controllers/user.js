@@ -1,66 +1,65 @@
 const { User } = require("../models");
 const debug = require("debug")("controller");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
-    /**
-     * Méthode pour vérifier si un utilisateur, si c'est le cas, on récupère les autres joueurs pour afficher la liste
-     * @param {*} req 
-     * @param {*} res 
-     */
-    async isConnected(req,res){
-        let users = [];
-        const user = req.session.user;
-        if(user){
-            // récupération des personnes déjà présentes
-            users = await Game.getUsers();
 
-            delete user.mail;
-            delete user.password;
-        }
-
-        res.json({
-            user,
-            users
-        });
-    },
     /**
      * Méthode pour créer un utilisateur et l'ajouter à la session
      * @param {*} req 
      * @param {*} res 
      */
     async createUser(req,res){
-        const user = await User.create(req.body);
-        req.session.user = user;
 
-        delete user.mail;
-        delete user.password;
+        const userToInsert = req.body;
 
-        res.json(user);
+        userToInsert.password = bcrypt.hashSync(req.body.password, 8);
+
+        const result = await User.create(userToInsert);
+
+        // req.session.user = user;
+
+        // We update the password into crypted string
+
+        res.json(result);
     },
-    /**
-     * Méthode de connexion d'un compte, retourne l'utilisateur et les personnes connectées au jeu
-     * @param {*} req 
-     * @param {*} res 
-     */
-    async checkPassword(req,res){
-        const user = await User.getUserByMail(req.body.mail);
-        
-        if(user.checkPassword(req.body.password)){
 
-            // récupération de l'ensemble des utilisateurs
-            const users = await Game.getUsers();
 
-            // ajout de l'utilisateur courant
-            await Game.addUser(user);
-            req.session.user = user;
+  /**
+   * Method to login
+   * @param {*} req 
+   * @param {*} res 
+   */
+  async login(req, res) {
 
-            delete user.mail;
-            delete user.password;
-            
-            res.json({
-                user,
-                users
-            });
-        }
+    const emailToFInd = req.body.email;
+
+    // We fetch the user according to his email
+    const user = await User.findUserLoggedByEmail(emailToFInd);
+
+    // If user don't exist, obligatory send a 0 length 
+    if (user.length === 0) {
+      res.status(404).send({
+        message: "User not found"});
     }
+
+    // Compare the user password with the crypted password in Db, return boolean
+    const passwordIsValid = bcrypt.compareSync(
+      req.body.password,
+      user[0].password
+    );
+
+    if (!passwordIsValid) {
+      res.status(401).send({
+        message: "Invalid password"});
+    }
+
+    // We create an object for the Front response
+    const userLogged = {
+      userId: user[0].id, 
+    }
+
+    res.json(userLogged);
+  },
+
 };
