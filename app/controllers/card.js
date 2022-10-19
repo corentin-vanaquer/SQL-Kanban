@@ -1,23 +1,25 @@
-const {Card} = require('../models/card');
+const { Card } = require('../models/index');
 
 module.exports = {
-    async findAll(_, response) {
+    async findAll(_, res) {
 
     },
 
-    async findOne(request, response) {
+    async findOne(req, res) {
 
     },
 
-    async addOne(request, response) {
+    async createCard(req, res) {
+        const card = await Card.create(req.body);
+
+        res.json(card);
+    },
+
+    async updateOne(req, res) {
 
     },
 
-    async updateOne(request, response) {
-
-    },
-
-    async deleteOne(request, response) {
+    async deleteOne(req, res) {
 
     }
 

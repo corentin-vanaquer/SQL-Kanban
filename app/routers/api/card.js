@@ -16,7 +16,7 @@ router.get('/cards/:id', cardController.findOne);
 //~ ---------- POST
 
 // ajouter une carte
-router.post('/cards', cardController.addOne);
+router.post('/cards', cardController.createCard);
 
 //~ ---------- PATCH
 

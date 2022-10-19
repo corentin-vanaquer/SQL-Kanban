@@ -1,0 +1,14 @@
+@hostname = http://localhost:9000/api
+
+### séparateur entre deux requêtes
+
+POST {{hostname}}/subscribe
+content-type: application/json
+
+{
+   "id": 1,
+	"firstname": "Corentin",
+   "lastname": "Vanaquer",
+   "mail": "corentin@gmail.com",
+   "password": "password"
+}

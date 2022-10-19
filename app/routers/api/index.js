@@ -5,12 +5,14 @@ const router = express.Router();
 router.all('/');
 
 // Import all router files
+const userRouter = require('./user');
 const cardRouter = require('./card');
 const listRouter = require('./list');
 const labelRouter = require('./label');
 const assocRouter = require('./assoc');
 
 // Use all router files
+router.use(userRouter);
 // router.use(cardRouter);
 // router.use(listRouter);
 // router.use(labelRouter);
