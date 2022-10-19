@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// Helpers
+const { ApiError } = require('../../helpers/errorHandler');
+
 // Default prefixing API's route,
 router.all('/');
 
@@ -17,5 +20,10 @@ router.use(userRouter);
 // router.use(listRouter);
 // router.use(labelRouter);
 // router.use(assocRouter);
+
+// Use error handler
+router.use(() => {
+    throw new ApiError('API Route not found', { statusCode: 404 });
+});
 
 module.exports = router;
